@@ -51,7 +51,7 @@ namespace GeneradorDeArchivos
                 if (dtModulos.Rows.Count == 0)
                 {
                     SqlConnection sqlConn = new SqlConnection(cadenaConex);
-                    SqlDataAdapter da = new SqlDataAdapter("SELECT * FROM Sinco.dbo.ModulosMenu", sqlConn);
+                    SqlDataAdapter da = new SqlDataAdapter("SELECT 'TODOS' DescModulo, -1 IdModulo UNION SELECT DescModulo, IdModulo FROM Sinco.dbo.ModulosMenu ORDER BY IdModulo", sqlConn);
                     try
                     {
                         sqlConn.Open();
@@ -86,8 +86,10 @@ namespace GeneradorDeArchivos
         {
             if (ChkMarco.Checked) ChkNET.Checked = ChkASP.Checked = !ChkMarco.Checked;
             LblRuta.Text = strRuta = TxtArchivo.Text = TxtParamsAdd.Text = "";
+            ReOrganizeControls(true);
             RutaEjemplo.Visible = false;
         }
+
         private void ChkEliminar_Checked(object sender, EventArgs e)
         {
             ChkActualizar.Checked = !ChkEliminar.Checked;
@@ -102,44 +104,54 @@ namespace GeneradorDeArchivos
 
         private void ReOrganizeControls(bool aspChecked)
         {
+            modulos.Clear();
+            foreach (int i in ListChkModulos.CheckedIndices) {
+                ListChkModulos.SetItemChecked(i, false);
+            }
             if (aspChecked)
             {
                 LblModulos.Visible = ListChkModulos.Visible = false;
 
-                LblParamsAdd.Location = new Point(LblParamsAdd.Location.X - 216, LblParamsAdd.Location.Y - 41);
-                TxtParamsAdd.Location = new Point(TxtParamsAdd.Location.X - 216, TxtParamsAdd.Location.Y - 41);
-                TxtParamsAdd.Width = TxtParamsAdd.Width + 50;
+                if (ChkASP.Checked)
+                {
+                    LblParamsAdd.Location = new Point(130, 45);
+                    TxtParamsAdd.Location = new Point(130, 63);
+                    TxtParamsAdd.Width = 240;
 
-                LblArchivo.Location = new Point(LblArchivo.Location.X - 166, LblArchivo.Location.Y - 41);
-                TxtArchivo.Location = new Point(TxtArchivo.Location.X - 166, TxtArchivo.Location.Y - 41);
-                TxtArchivo.Width = TxtArchivo.Width + 50;
+                    LblArchivo.Location = new Point(385, 45);
+                    TxtArchivo.Location = new Point(385, 63);
+                    TxtArchivo.Width = 240;
 
-                LblSeparador.Location = new Point(LblSeparador.Location.X - 164, LblSeparador.Location.Y - 44);
+                    LblSeparador.Location = new Point(372, 66);
+                }
+
+                else
+                {
+                    LblParamsAdd.Location = new Point(135, 95);
+                    TxtParamsAdd.Location = new Point(135, 115);
+                    TxtParamsAdd.Width = 240;
+
+                    LblArchivo.Location = new Point(393, 95);
+                    TxtArchivo.Location = new Point(393, 115);
+                    TxtArchivo.Width = 240;
+
+                    LblSeparador.Location = new Point(378, 117);
+                }
             }
 
-            else if (ChkNET.Checked)
+            else 
             {
-                LblParamsAdd.Location = new Point(LblParamsAdd.Location.X + 216, LblParamsAdd.Location.Y + 41);
-                TxtParamsAdd.Location = new Point(TxtParamsAdd.Location.X + 216, TxtParamsAdd.Location.Y + 41);
-                TxtParamsAdd.Width = TxtParamsAdd.Width - 50;
+                LblParamsAdd.Location = new Point(338, 91);
+                TxtParamsAdd.Location = new Point(344,107);
+                TxtParamsAdd.Width = 190;
 
-                LblArchivo.Location = new Point(LblArchivo.Location.X + 166, LblArchivo.Location.Y + 41);
-                TxtArchivo.Location = new Point(TxtArchivo.Location.X + 166, TxtArchivo.Location.Y + 41);
-                TxtArchivo.Width = TxtArchivo.Width - 50;
+                LblArchivo.Location = new Point(559,91);
+                TxtArchivo.Location = new Point(559, 108);
+                TxtArchivo.Width = 190;
 
-                LblSeparador.Location = new Point(LblSeparador.Location.X + 164, LblSeparador.Location.Y + 44);
+                LblSeparador.Location = new Point(540, 111);
             }
-            else {
-                LblParamsAdd.Location = new Point(LblParamsAdd.Location.X + 216, LblParamsAdd.Location.Y + 60);
-                TxtParamsAdd.Location = new Point(TxtParamsAdd.Location.X + 216, TxtParamsAdd.Location.Y + 60);
-                TxtParamsAdd.Width = TxtParamsAdd.Width - 50;
-
-                LblArchivo.Location = new Point(LblArchivo.Location.X + 166, LblArchivo.Location.Y + 60);
-                TxtArchivo.Location = new Point(TxtArchivo.Location.X + 166, TxtArchivo.Location.Y + 60);
-                TxtArchivo.Width = TxtArchivo.Width - 50;
-
-                LblSeparador.Location = new Point(LblSeparador.Location.X + 164, LblSeparador.Location.Y + 44);
-            }
+            
         }
 
         private void TxtArchivo_Leave(object sender, EventArgs e)
@@ -162,7 +174,7 @@ namespace GeneradorDeArchivos
         {
             DataTable dt = new DataTable();
             SqlConnection sqlConn = new SqlConnection(cadenaConex);
-            var strSP = @"SELECT BdAspUbicacion, BdSservidor, BdNombre, BdNombreCliente FROM dbo.BaseDatos WHERE (BdCategoria = 22) AND BdAspUbicacion IS NOT NULL AND BdActivo = 1";
+            var strSP = @"SELECT BdAspUbicacion, BdSservidor, BdNombre, BdNombreCliente FROM dbo.BaseDatos WHERE (BdCategoria = "+22+") AND BdAspUbicacion IS NOT NULL AND BdActivo = 1";
             SqlDataAdapter da = new SqlDataAdapter(strSP, sqlConn);
             try
             {
@@ -229,13 +241,28 @@ namespace GeneradorDeArchivos
 
         private void ListChkModulos_ItemCheck(object sender, ItemCheckEventArgs e)
         {
-            var modRepeat = from module in modulos
-                      where module == ListChkModulos.GetItemText(ListChkModulos.Items[e.Index]).ToString()
-                      select module.FirstOrDefault();
-            if (modRepeat.ToArray().Length == 0)
-                modulos.Add(ListChkModulos.GetItemText(ListChkModulos.Items[e.Index]));
+            if (ListChkModulos.GetItemText(ListChkModulos.Items[e.Index]).ToString() == "TODOS")
+            {
+                if (modulos.Count > 0) modulos.Clear();
+                else
+                {
+                    foreach (var i in ListChkModulos.Items)
+                    {
+                        if (ListChkModulos.GetItemText(i) != "TODOS")
+                            modulos.Add(ListChkModulos.GetItemText(i));
+                    }
+                }
+            }
             else
-                modulos.Remove(ListChkModulos.GetItemText(ListChkModulos.Items[e.Index]));
+            {
+                var modRepeat = from module in modulos
+                                where module == ListChkModulos.GetItemText(ListChkModulos.Items[e.Index]).ToString()
+                                select module.FirstOrDefault();
+                if (modRepeat.ToArray().Length == 0)
+                    modulos.Add(ListChkModulos.GetItemText(ListChkModulos.Items[e.Index]));
+                else
+                    modulos.Remove(ListChkModulos.GetItemText(ListChkModulos.Items[e.Index]));
+            }
         }
 
         private void validarGererar() {

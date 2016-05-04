@@ -136,7 +136,7 @@
             // 
             // TxtParamsAdd
             // 
-            this.TxtParamsAdd.Location = new System.Drawing.Point(341, 108);
+            this.TxtParamsAdd.Location = new System.Drawing.Point(344, 107);
             this.TxtParamsAdd.Name = "TxtParamsAdd";
             this.TxtParamsAdd.Size = new System.Drawing.Size(190, 20);
             this.TxtParamsAdd.TabIndex = 9;
@@ -152,7 +152,7 @@
             // 
             // TxtArchivo
             // 
-            this.TxtArchivo.Location = new System.Drawing.Point(559, 108);
+            this.TxtArchivo.Location = new System.Drawing.Point(558, 108);
             this.TxtArchivo.Name = "TxtArchivo";
             this.TxtArchivo.Size = new System.Drawing.Size(188, 20);
             this.TxtArchivo.TabIndex = 11;
@@ -209,7 +209,7 @@
             // LblSeparador
             // 
             this.LblSeparador.AutoSize = true;
-            this.LblSeparador.Location = new System.Drawing.Point(538, 114);
+            this.LblSeparador.Location = new System.Drawing.Point(540, 111);
             this.LblSeparador.Name = "LblSeparador";
             this.LblSeparador.Size = new System.Drawing.Size(12, 13);
             this.LblSeparador.TabIndex = 17;
