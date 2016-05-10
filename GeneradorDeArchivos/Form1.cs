@@ -7,6 +7,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -36,7 +37,7 @@ namespace GeneradorDeArchivos
         {
             DialogResult result = folderBrowserDialog1.ShowDialog();
             if (result == DialogResult.OK)
-                label1.Text = folderBrowserDialog1.SelectedPath;
+                LblRutaCarpeta.Text = folderBrowserDialog1.SelectedPath;
         }
 
         private void ChkNET_CheckedChange(object sender, EventArgs e)
@@ -93,8 +94,9 @@ namespace GeneradorDeArchivos
         private void ChkEliminar_Checked(object sender, EventArgs e)
         {
             ChkActualizar.Checked = !ChkEliminar.Checked;
-            LblAncla.Visible = TxtAncla.Visible = LblInsertar.Visible = TxtValorInsertar.Visible = ChkActualizar.Checked;
-            LblBuscar.Visible = TxtBuscar.Visible = !ChkActualizar.Checked;
+            LblAncla.Visible = TxtAncla.Visible = ChkAntes.Visible = LblInsertar.Visible = TxtValorInsertar.Visible = ChkActualizar.Checked;
+            LblBuscar.Visible = TxtBuscar.Visible = BtnAddSearchItem.Visible = !ChkActualizar.Checked;
+            LblSearchValues.Text = "";
         }
 
         private void ChkActualizar_CheckedChanged(object sender, EventArgs e)
@@ -105,7 +107,8 @@ namespace GeneradorDeArchivos
         private void ReOrganizeControls(bool aspChecked)
         {
             modulos.Clear();
-            foreach (int i in ListChkModulos.CheckedIndices) {
+            foreach (int i in ListChkModulos.CheckedIndices)
+            {
                 ListChkModulos.SetItemChecked(i, false);
             }
             if (aspChecked)
@@ -139,26 +142,26 @@ namespace GeneradorDeArchivos
                 }
             }
 
-            else 
+            else
             {
                 LblParamsAdd.Location = new Point(338, 91);
-                TxtParamsAdd.Location = new Point(344,107);
+                TxtParamsAdd.Location = new Point(344, 107);
                 TxtParamsAdd.Width = 190;
 
-                LblArchivo.Location = new Point(559,91);
+                LblArchivo.Location = new Point(559, 91);
                 TxtArchivo.Location = new Point(559, 108);
                 TxtArchivo.Width = 190;
 
                 LblSeparador.Location = new Point(540, 111);
             }
-            
+
         }
 
         private void TxtArchivo_Leave(object sender, EventArgs e)
         {
             if (ChkNET.Checked)
             {
-                strRuta += "ERPNET";
+                strRuta += "\\ERPNET";
             }
 
             var modRepeat = from module in modulos
@@ -172,9 +175,10 @@ namespace GeneradorDeArchivos
 
         private void BtnGenFiles_Click(object sender, EventArgs e)
         {
+            BtnGenFiles.Enabled = false;
             DataTable dt = new DataTable();
             SqlConnection sqlConn = new SqlConnection(cadenaConex);
-            var strSP = @"SELECT BdAspUbicacion, BdSservidor, BdNombre, BdNombreCliente FROM dbo.BaseDatos WHERE (BdCategoria = "+22+") AND BdAspUbicacion IS NOT NULL AND BdActivo = 1";
+            var strSP = @"SELECT BdAspUbicacion, BdSservidor, BdNombre, BdNombreCliente FROM dbo.BaseDatos WHERE (BdCategoria = " + (ChkMarco.Checked ? "23" : "22") + ") AND BdAspUbicacion IS NOT NULL AND BdActivo = 1";
             SqlDataAdapter da = new SqlDataAdapter(strSP, sqlConn);
             try
             {
@@ -190,53 +194,182 @@ namespace GeneradorDeArchivos
 
             for (int i = 0; i < dt.Rows.Count; i++)
             {
-                ArmarRuta(dt.Rows[i][0].ToString(), dt.Rows[i]);
+                ArmarRuta(dt.Rows[i]);
             }
+            BtnGenFiles.Enabled = true;
         }
 
 
-        private void ArmarRuta(string strBaseServer, DataRow dr)//DataTable dt, int i)
+        private void ArmarRuta(DataRow dr)
         {
-            foreach (var mod in modulos)
+            if (modulos.Count > 0)
             {
-                strBaseServer = String.Format(strBaseServer + "\\{0}\\{1}{2}", strRuta, mod, baseFijo);
-                RecorrerDocumento(strBaseServer, dr, mod);
-            }
-        }
-
-        private void RecorrerDocumento(string strBaseServer, DataRow dr, string modulo)
-        {
-            if (File.Exists(strBaseServer))
-            {
-                using (StreamReader sr = File.OpenText(strBaseServer))
+                foreach (var mod in modulos)
                 {
-                    string s = "";
-                    var count = 0;
-                    while ((s = sr.ReadLine()) != null)
+                    //strBaseServer = String.Format(strBaseServer + "{0}\\{1}{2}", strRuta, mod, baseFijo);
+                    var rutaCompleta = String.Format(dr[0].ToString() + "{0}\\{1}{2}", strRuta, mod, baseFijo);
+                    if (File.Exists(rutaCompleta))
                     {
-                        if (s.IndexOf("ASPState") != -1 || s.IndexOf("NombreAplicacion") != -1 || s.IndexOf("AmbientePublicacion") != -1)
+                        using (StreamReader sr = File.OpenText(rutaCompleta))
                         {
-                            DataTable dt0 = new DataTable();
-                            SqlConnection sqlConn0 = new SqlConnection(cadenaGold);
-                            var strSP0 = @"INSERT INTO CONFIG.Archivos SELECT '" + dr[1].ToString() + "', '" + dr[2].ToString() + "', '" + dr[3].ToString() + "', '" + modulo + "', 'Web.config" + "', '" + strBaseServer + "', '" + count + "'";
-                            SqlDataAdapter da0 = new SqlDataAdapter(strSP0, sqlConn0);
+                            var cte = 0;
+                            string s = "";
+                            var searchWords = LblSearchValues.Text;
                             try
                             {
-                                sqlConn0.Open();
-                                da0.Fill(dt0);
-                                sqlConn0.Close();
+                                while ((s = sr.ReadLine()) != null && cte == 0)
+                                {
+                                    cte++;
+                                    RecorrerDocumento(rutaCompleta, dr, mod);
+                                }
                             }
-                            catch (SqlException exSQL)
+                            catch (Exception ex)
                             {
-                                Console.WriteLine(exSQL.ToString());
-                                sqlConn0.Close();
+                                throw ex;
                             }
-                            Console.WriteLine(s);
                         }
-                        count++;
                     }
                 }
             }
+            else
+            {
+                var rutaCompleta = String.Format(dr[0].ToString() + "{0}{1}", strRuta, baseFijo);
+                if (File.Exists(rutaCompleta))
+                {
+                    using (StreamReader sr = File.OpenText(rutaCompleta))
+                    {
+                        var cte = 0;
+                        string s = "";
+                        var searchWords = LblSearchValues.Text;
+                        try
+                        {
+                            while ((s = sr.ReadLine()) != null && cte == 0)
+                            {
+                                cte++;
+                                RecorrerDocumento(rutaCompleta, dr, null);
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            throw ex;
+                        }
+                    }
+                }
+            }
+        }
+
+        private void RecorrerDocumento(string rutaCompleta, DataRow dr, string modulo)
+        {
+
+            if (File.Exists(rutaCompleta))
+            {
+                var test = LblRutaCarpeta.Text;
+                var tales = String.Format(dr[0].ToString().Replace("\\\\", "\\") + "{0}{1}{2}", strRuta, (string.IsNullOrEmpty(modulo) ? "" : "\\" + modulo), (TxtParamsAdd.Text == "" ? "" : "\\" + TxtParamsAdd.Text)).Split('\\');
+
+                while (tales.Length > 0)
+                {
+                    if (tales[0] == "")
+                    {
+                        tales = tales.Skip(1).ToArray();
+                    }
+                    else
+                    {
+                        test += "\\" + tales[0];
+                        tales = tales.Skip(1).ToArray();
+                        if (!System.IO.Directory.Exists(test))
+                            System.IO.Directory.CreateDirectory(test);
+                    }
+                }
+                test += "\\" + TxtArchivo.Text;
+
+                using (StreamWriter file =
+                                new System.IO.StreamWriter(test))
+                {
+                    using (StreamReader sr = File.OpenText(rutaCompleta))
+                    {
+                        string s = "";
+                        var count = 0;
+                        var searchWords = LblSearchValues.Text;
+                        try
+                        {
+                            while ((s = sr.ReadLine()) != null)
+                            {
+                                if (ChkEliminar.Checked)
+                                {
+                                    Regex rgx = new Regex(searchWords);
+                                    var matches = rgx.Match(s);
+                                    if (matches.Length == 0)
+                                    {
+                                        file.WriteLine(s);
+                                    }
+                                    count++;
+                                }
+                                else {
+                                    if (s.IndexOf(TxtAncla.Text) != -1)
+                                    {
+                                        if (ChkAntes.Checked) file.WriteLine(TxtValorInsertar.Text);
+                                        file.WriteLine(s);
+                                        if (!ChkAntes.Checked) file.WriteLine(TxtValorInsertar.Text);
+                                    }
+                                    else
+                                    {
+                                        file.WriteLine(s);
+                                    }
+                                    count++;
+                                }
+                            }
+                        }
+                        catch (Exception ex) {
+                            throw ex;
+                        }
+                    }
+                }
+
+                DataTable dt0 = new DataTable();
+                SqlConnection sqlConn0 = new SqlConnection(cadenaGold);
+                var strSP0 = @"INSERT INTO CONFIG.Archivos SELECT '" + dr[1].ToString() + "', '" + dr[2].ToString() + "', '" + dr[3].ToString() + "', '" + modulo + "', 'Web.config" + "', '" + rutaCompleta + "'";
+                SqlDataAdapter da0 = new SqlDataAdapter(strSP0, sqlConn0);
+                try
+                {
+                    sqlConn0.Open();
+                    da0.Fill(dt0);
+                    sqlConn0.Close();
+                }
+                catch (SqlException exSQL)
+                {
+                    Console.WriteLine(exSQL.ToString());
+                    sqlConn0.Close();
+                }
+            }
+            //    using (StreamReader sr = File.OpenText(strBaseServer))
+            //    {
+            //        string s = "";
+            //        var count = 0;
+            //        while ((s = sr.ReadLine()) != null)
+            //        {
+            //            if (s.IndexOf("ASPState") != -1 || s.IndexOf("NombreAplicacion") != -1 || s.IndexOf("AmbientePublicacion") != -1)
+            //            {
+            //                DataTable dt0 = new DataTable();
+            //                SqlConnection sqlConn0 = new SqlConnection(cadenaGold);
+            //                var strSP0 = @"INSERT INTO CONFIG.Archivos SELECT '" + dr[1].ToString() + "', '" + dr[2].ToString() + "', '" + dr[3].ToString() + "', '" + modulo + "', 'Web.config" + "', '" + strBaseServer + "', '" + count + "'";
+            //                SqlDataAdapter da0 = new SqlDataAdapter(strSP0, sqlConn0);
+            //                try
+            //                {
+            //                    sqlConn0.Open();
+            //                    da0.Fill(dt0);
+            //                    sqlConn0.Close();
+            //                }
+            //                catch (SqlException exSQL)
+            //                {
+            //                    Console.WriteLine(exSQL.ToString());
+            //                    sqlConn0.Close();
+            //                }
+            //                Console.WriteLine(s);
+            //            }
+            //            count++;
+            //        }
+            //    }
+            //}
         }
 
         private void ListChkModulos_ItemCheck(object sender, ItemCheckEventArgs e)
@@ -265,8 +398,9 @@ namespace GeneradorDeArchivos
             }
         }
 
-        private void validarGererar() {
-            if (!string.IsNullOrEmpty(TxtArchivo.Text) && ((ChkEliminar.Checked && !string.IsNullOrEmpty(TxtBuscar.Text)) || (ChkActualizar.Checked && !string.IsNullOrEmpty(TxtAncla.Text) && !string.IsNullOrEmpty(TxtValorInsertar.Text))))
+        private void validarGererar()
+        {
+            if (!string.IsNullOrEmpty(TxtArchivo.Text) && ((ChkEliminar.Checked && !string.IsNullOrEmpty(TxtBuscar.Text)) || (ChkActualizar.Checked && !string.IsNullOrEmpty(TxtAncla.Text) && !string.IsNullOrEmpty(TxtValorInsertar.Text))) && !string.IsNullOrEmpty(LblRutaCarpeta.Text))
                 BtnGenFiles.Enabled = true;
         }
 
@@ -285,6 +419,18 @@ namespace GeneradorDeArchivos
             validarGererar();
         }
 
-        
+        private void TxtBuscar_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyValue == 13)
+            {
+                BtnAddSearchItem_Click(null, e);
+            }
+        }
+
+        private void BtnAddSearchItem_Click(object sender, EventArgs e)
+        {
+            LblSearchValues.Text += LblSearchValues.Text == "" ? TxtBuscar.Text : "|" + TxtBuscar.Text;
+            TxtBuscar.Text = "";
+        }
     }
 }

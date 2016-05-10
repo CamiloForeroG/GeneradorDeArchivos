@@ -30,7 +30,7 @@
         {
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.BtnSeleccionarCarpeta = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
+            this.LblRutaCarpeta = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.ChkASP = new System.Windows.Forms.CheckBox();
             this.ChkNET = new System.Windows.Forms.CheckBox();
@@ -54,6 +54,9 @@
             this.BtnGenFiles = new System.Windows.Forms.Button();
             this.LblRuta = new System.Windows.Forms.Label();
             this.ChkMarco = new System.Windows.Forms.CheckBox();
+            this.LblSearchValues = new System.Windows.Forms.Label();
+            this.BtnAddSearchItem = new System.Windows.Forms.Button();
+            this.ChkAntes = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // BtnSeleccionarCarpeta
@@ -66,13 +69,13 @@
             this.BtnSeleccionarCarpeta.UseVisualStyleBackColor = true;
             this.BtnSeleccionarCarpeta.Click += new System.EventHandler(this.BtnSeleccionarCarpeta_Click);
             // 
-            // label1
+            // LblRutaCarpeta
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(165, 17);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(0, 13);
-            this.label1.TabIndex = 2;
+            this.LblRutaCarpeta.AutoSize = true;
+            this.LblRutaCarpeta.Location = new System.Drawing.Point(165, 17);
+            this.LblRutaCarpeta.Name = "LblRutaCarpeta";
+            this.LblRutaCarpeta.Size = new System.Drawing.Size(0, 13);
+            this.LblRutaCarpeta.TabIndex = 2;
             // 
             // label2
             // 
@@ -221,6 +224,7 @@
             this.TxtBuscar.Name = "TxtBuscar";
             this.TxtBuscar.Size = new System.Drawing.Size(163, 20);
             this.TxtBuscar.TabIndex = 18;
+            this.TxtBuscar.KeyUp += new System.Windows.Forms.KeyEventHandler(this.TxtBuscar_KeyUp);
             this.TxtBuscar.Leave += new System.EventHandler(this.TxtBuscar_Leave);
             // 
             // LblBuscar
@@ -290,11 +294,43 @@
             this.ChkMarco.UseVisualStyleBackColor = true;
             this.ChkMarco.CheckedChanged += new System.EventHandler(this.ChkMarco_CheckedChanged);
             // 
+            // LblSearchValues
+            // 
+            this.LblSearchValues.AutoSize = true;
+            this.LblSearchValues.Location = new System.Drawing.Point(428, 228);
+            this.LblSearchValues.Name = "LblSearchValues";
+            this.LblSearchValues.Size = new System.Drawing.Size(0, 13);
+            this.LblSearchValues.TabIndex = 26;
+            // 
+            // BtnAddSearchItem
+            // 
+            this.BtnAddSearchItem.Image = global::GeneradorDeArchivos.Properties.Resources.right_arrow;
+            this.BtnAddSearchItem.Location = new System.Drawing.Point(377, 219);
+            this.BtnAddSearchItem.Name = "BtnAddSearchItem";
+            this.BtnAddSearchItem.Size = new System.Drawing.Size(34, 30);
+            this.BtnAddSearchItem.TabIndex = 27;
+            this.BtnAddSearchItem.UseVisualStyleBackColor = true;
+            this.BtnAddSearchItem.Click += new System.EventHandler(this.BtnAddSearchItem_Click);
+            // 
+            // ChkAntes
+            // 
+            this.ChkAntes.AutoSize = true;
+            this.ChkAntes.Location = new System.Drawing.Point(208, 276);
+            this.ChkAntes.Name = "ChkAntes";
+            this.ChkAntes.Size = new System.Drawing.Size(53, 17);
+            this.ChkAntes.TabIndex = 28;
+            this.ChkAntes.Text = "Antes";
+            this.ChkAntes.UseVisualStyleBackColor = true;
+            this.ChkAntes.Visible = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(775, 424);
+            this.Controls.Add(this.ChkAntes);
+            this.Controls.Add(this.BtnAddSearchItem);
+            this.Controls.Add(this.LblSearchValues);
             this.Controls.Add(this.ChkMarco);
             this.Controls.Add(this.BtnGenFiles);
             this.Controls.Add(this.RutaEjemplo);
@@ -318,7 +354,7 @@
             this.Controls.Add(this.ChkNET);
             this.Controls.Add(this.ChkASP);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.LblRutaCarpeta);
             this.Controls.Add(this.BtnSeleccionarCarpeta);
             this.Name = "Form1";
             this.Text = "Form1";
@@ -331,7 +367,7 @@
         #endregion
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
         private System.Windows.Forms.Button BtnSeleccionarCarpeta;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label LblRutaCarpeta;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.CheckBox ChkASP;
         private System.Windows.Forms.CheckBox ChkNET;
@@ -355,6 +391,9 @@
         private System.Windows.Forms.Button BtnGenFiles;
         private System.Windows.Forms.Label LblRuta;
         private System.Windows.Forms.CheckBox ChkMarco;
+        private System.Windows.Forms.Label LblSearchValues;
+        private System.Windows.Forms.Button BtnAddSearchItem;
+        private System.Windows.Forms.CheckBox ChkAntes;
     }
 }
 
