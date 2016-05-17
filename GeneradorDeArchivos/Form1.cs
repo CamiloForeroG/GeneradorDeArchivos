@@ -31,6 +31,20 @@ namespace GeneradorDeArchivos
             ChkASP.Checked = true;
             ChkEliminar.Checked = true;
             ReOrganizeControls(true);
+
+            GridOriginales.ColumnCount = 2;
+            GridOriginales.ColumnHeadersVisible = true;
+            GridOriginales.Columns[0].Name = "ID";
+            GridOriginales.Columns[0].Width = 30;
+            GridOriginales.Columns[1].Name = "Archivo";
+            GridOriginales.Columns[1].Width = GridOriginales.Width - 75;
+
+            GridGenerados.ColumnCount = 2;
+            GridGenerados.ColumnHeadersVisible = true;
+            GridGenerados.Columns[0].Name = "ID";
+            GridGenerados.Columns[0].Width = 30;
+            GridGenerados.Columns[1].Name = "Archivo";
+            GridGenerados.Columns[1].Width = GridGenerados.Width - 75; 
         }
 
         private void BtnSeleccionarCarpeta_Click(object sender, EventArgs e)
@@ -197,6 +211,7 @@ namespace GeneradorDeArchivos
                 ArmarRuta(dt.Rows[i]);
             }
             BtnGenFiles.Enabled = true;
+            tabControl1.SelectedIndex = 1;
         }
 
 
@@ -260,7 +275,6 @@ namespace GeneradorDeArchivos
 
         private void RecorrerDocumento(string rutaCompleta, DataRow dr, string modulo)
         {
-
             if (File.Exists(rutaCompleta))
             {
                 var test = LblRutaCarpeta.Text;
@@ -318,6 +332,9 @@ namespace GeneradorDeArchivos
                                     count++;
                                 }
                             }
+                            var ident = GridOriginales.Rows.Count.ToString();
+                            GridOriginales.Rows.Add(ident, rutaCompleta);
+                            GridGenerados.Rows.Add(ident, test);
                         }
                         catch (Exception ex) {
                             throw ex;
@@ -327,7 +344,7 @@ namespace GeneradorDeArchivos
 
                 DataTable dt0 = new DataTable();
                 SqlConnection sqlConn0 = new SqlConnection(cadenaGold);
-                var strSP0 = @"INSERT INTO CONFIG.Archivos SELECT '" + dr[1].ToString() + "', '" + dr[2].ToString() + "', '" + dr[3].ToString() + "', '" + modulo + "', 'Web.config" + "', '" + rutaCompleta + "'";
+                var strSP0 = @"INSERT INTO CONFIG.Archivos (Servidor, Empresa, NombreBaseDatos, Modulo, Archivo, RutaCompleta) SELECT '" + dr[1].ToString() + "', '" + dr[2].ToString() + "', '" + dr[3].ToString() + "', '" + modulo + "', 'Web.config" + "', '" + rutaCompleta + "'";
                 SqlDataAdapter da0 = new SqlDataAdapter(strSP0, sqlConn0);
                 try
                 {
@@ -341,36 +358,36 @@ namespace GeneradorDeArchivos
                     sqlConn0.Close();
                 }
             }
-            //    using (StreamReader sr = File.OpenText(strBaseServer))
+            //using (StreamReader sr = File.OpenText(strBaseServer))
+            //{
+            //    string s = "";
+            //    var count = 0;
+            //    while ((s = sr.ReadLine()) != null)
             //    {
-            //        string s = "";
-            //        var count = 0;
-            //        while ((s = sr.ReadLine()) != null)
+            //        if (s.IndexOf("ASPState") != -1 || s.IndexOf("NombreAplicacion") != -1 || s.IndexOf("AmbientePublicacion") != -1)
             //        {
-            //            if (s.IndexOf("ASPState") != -1 || s.IndexOf("NombreAplicacion") != -1 || s.IndexOf("AmbientePublicacion") != -1)
+            //            DataTable dt0 = new DataTable();
+            //            SqlConnection sqlConn0 = new SqlConnection(cadenaGold);
+            //            var strSP0 = @"INSERT INTO CONFIG.Archivos SELECT '" + dr[1].ToString() + "', '" + dr[2].ToString() + "', '" + dr[3].ToString() + "', '" + modulo + "', 'Web.config" + "', '" + strBaseServer + "', '" + count + "'";
+            //            SqlDataAdapter da0 = new SqlDataAdapter(strSP0, sqlConn0);
+            //            try
             //            {
-            //                DataTable dt0 = new DataTable();
-            //                SqlConnection sqlConn0 = new SqlConnection(cadenaGold);
-            //                var strSP0 = @"INSERT INTO CONFIG.Archivos SELECT '" + dr[1].ToString() + "', '" + dr[2].ToString() + "', '" + dr[3].ToString() + "', '" + modulo + "', 'Web.config" + "', '" + strBaseServer + "', '" + count + "'";
-            //                SqlDataAdapter da0 = new SqlDataAdapter(strSP0, sqlConn0);
-            //                try
-            //                {
-            //                    sqlConn0.Open();
-            //                    da0.Fill(dt0);
-            //                    sqlConn0.Close();
-            //                }
-            //                catch (SqlException exSQL)
-            //                {
-            //                    Console.WriteLine(exSQL.ToString());
-            //                    sqlConn0.Close();
-            //                }
-            //                Console.WriteLine(s);
+            //                sqlConn0.Open();
+            //                da0.Fill(dt0);
+            //                sqlConn0.Close();
             //            }
-            //            count++;
+            //            catch (SqlException exSQL)
+            //            {
+            //                Console.WriteLine(exSQL.ToString());
+            //                sqlConn0.Close();
+            //            }
+            //            Console.WriteLine(s);
             //        }
+            //        count++;
             //    }
             //}
         }
+    
 
         private void ListChkModulos_ItemCheck(object sender, ItemCheckEventArgs e)
         {
@@ -431,6 +448,14 @@ namespace GeneradorDeArchivos
         {
             LblSearchValues.Text += LblSearchValues.Text == "" ? TxtBuscar.Text : "|" + TxtBuscar.Text;
             TxtBuscar.Text = "";
+        }
+
+        private void Grids_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            var originalFileRoute = GridOriginales.Rows[e.RowIndex].Cells[1].Value;
+            var generatedFileRoute = GridGenerados.Rows[e.RowIndex].Cells[1].Value;
+            var ters = new Comparaciones(originalFileRoute.ToString(), generatedFileRoute.ToString(), ChkEliminar.Checked);
+            ters.Show();
         }
     }
 }

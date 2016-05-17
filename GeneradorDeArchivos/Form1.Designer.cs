@@ -55,13 +55,30 @@
             this.LblRuta = new System.Windows.Forms.Label();
             this.ChkMarco = new System.Windows.Forms.CheckBox();
             this.LblSearchValues = new System.Windows.Forms.Label();
-            this.BtnAddSearchItem = new System.Windows.Forms.Button();
             this.ChkAntes = new System.Windows.Forms.CheckBox();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.GridOriginales = new System.Windows.Forms.DataGridView();
+            this.LblOriginal = new System.Windows.Forms.Label();
+            this.GridGenerados = new System.Windows.Forms.DataGridView();
+            this.label1 = new System.Windows.Forms.Label();
+            this.BtnAddSearchItem = new System.Windows.Forms.Button();
+            this.tabControl1.SuspendLayout();
+            this.tabPage1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+            this.splitContainer1.Panel1.SuspendLayout();
+            this.splitContainer1.Panel2.SuspendLayout();
+            this.splitContainer1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.GridOriginales)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.GridGenerados)).BeginInit();
             this.SuspendLayout();
             // 
             // BtnSeleccionarCarpeta
             // 
-            this.BtnSeleccionarCarpeta.Location = new System.Drawing.Point(31, 12);
+            this.BtnSeleccionarCarpeta.Location = new System.Drawing.Point(16, 16);
             this.BtnSeleccionarCarpeta.Name = "BtnSeleccionarCarpeta";
             this.BtnSeleccionarCarpeta.Size = new System.Drawing.Size(119, 23);
             this.BtnSeleccionarCarpeta.TabIndex = 1;
@@ -72,7 +89,7 @@
             // LblRutaCarpeta
             // 
             this.LblRutaCarpeta.AutoSize = true;
-            this.LblRutaCarpeta.Location = new System.Drawing.Point(165, 17);
+            this.LblRutaCarpeta.Location = new System.Drawing.Point(170, 21);
             this.LblRutaCarpeta.Name = "LblRutaCarpeta";
             this.LblRutaCarpeta.Size = new System.Drawing.Size(0, 13);
             this.LblRutaCarpeta.TabIndex = 2;
@@ -80,7 +97,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(28, 68);
+            this.label2.Location = new System.Drawing.Point(20, 58);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(33, 13);
             this.label2.TabIndex = 3;
@@ -89,7 +106,7 @@
             // ChkASP
             // 
             this.ChkASP.AutoSize = true;
-            this.ChkASP.Location = new System.Drawing.Point(67, 68);
+            this.ChkASP.Location = new System.Drawing.Point(59, 58);
             this.ChkASP.Name = "ChkASP";
             this.ChkASP.Size = new System.Drawing.Size(47, 17);
             this.ChkASP.TabIndex = 4;
@@ -100,7 +117,7 @@
             // ChkNET
             // 
             this.ChkNET.AutoSize = true;
-            this.ChkNET.Location = new System.Drawing.Point(67, 91);
+            this.ChkNET.Location = new System.Drawing.Point(59, 81);
             this.ChkNET.Name = "ChkNET";
             this.ChkNET.Size = new System.Drawing.Size(51, 17);
             this.ChkNET.TabIndex = 5;
@@ -111,7 +128,7 @@
             // ListChkModulos
             // 
             this.ListChkModulos.FormattingEnabled = true;
-            this.ListChkModulos.Location = new System.Drawing.Point(181, 91);
+            this.ListChkModulos.Location = new System.Drawing.Point(173, 81);
             this.ListChkModulos.Name = "ListChkModulos";
             this.ListChkModulos.Size = new System.Drawing.Size(120, 94);
             this.ListChkModulos.TabIndex = 6;
@@ -121,7 +138,7 @@
             // LblModulos
             // 
             this.LblModulos.AutoSize = true;
-            this.LblModulos.Location = new System.Drawing.Point(125, 91);
+            this.LblModulos.Location = new System.Drawing.Point(117, 81);
             this.LblModulos.Name = "LblModulos";
             this.LblModulos.Size = new System.Drawing.Size(50, 13);
             this.LblModulos.TabIndex = 7;
@@ -131,7 +148,7 @@
             // LblParamsAdd
             // 
             this.LblParamsAdd.AutoSize = true;
-            this.LblParamsAdd.Location = new System.Drawing.Point(338, 91);
+            this.LblParamsAdd.Location = new System.Drawing.Point(330, 81);
             this.LblParamsAdd.Name = "LblParamsAdd";
             this.LblParamsAdd.Size = new System.Drawing.Size(120, 13);
             this.LblParamsAdd.TabIndex = 8;
@@ -139,7 +156,7 @@
             // 
             // TxtParamsAdd
             // 
-            this.TxtParamsAdd.Location = new System.Drawing.Point(344, 107);
+            this.TxtParamsAdd.Location = new System.Drawing.Point(336, 97);
             this.TxtParamsAdd.Name = "TxtParamsAdd";
             this.TxtParamsAdd.Size = new System.Drawing.Size(190, 20);
             this.TxtParamsAdd.TabIndex = 9;
@@ -147,7 +164,7 @@
             // LblArchivo
             // 
             this.LblArchivo.AutoSize = true;
-            this.LblArchivo.Location = new System.Drawing.Point(559, 91);
+            this.LblArchivo.Location = new System.Drawing.Point(551, 81);
             this.LblArchivo.Name = "LblArchivo";
             this.LblArchivo.Size = new System.Drawing.Size(46, 13);
             this.LblArchivo.TabIndex = 10;
@@ -155,7 +172,7 @@
             // 
             // TxtArchivo
             // 
-            this.TxtArchivo.Location = new System.Drawing.Point(558, 108);
+            this.TxtArchivo.Location = new System.Drawing.Point(550, 98);
             this.TxtArchivo.Name = "TxtArchivo";
             this.TxtArchivo.Size = new System.Drawing.Size(188, 20);
             this.TxtArchivo.TabIndex = 11;
@@ -164,7 +181,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(28, 233);
+            this.label5.Location = new System.Drawing.Point(20, 208);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(43, 13);
             this.label5.TabIndex = 12;
@@ -173,7 +190,7 @@
             // ChkEliminar
             // 
             this.ChkEliminar.AutoSize = true;
-            this.ChkEliminar.Location = new System.Drawing.Point(78, 228);
+            this.ChkEliminar.Location = new System.Drawing.Point(70, 203);
             this.ChkEliminar.Name = "ChkEliminar";
             this.ChkEliminar.Size = new System.Drawing.Size(62, 17);
             this.ChkEliminar.TabIndex = 13;
@@ -184,7 +201,7 @@
             // ChkActualizar
             // 
             this.ChkActualizar.AutoSize = true;
-            this.ChkActualizar.Location = new System.Drawing.Point(78, 252);
+            this.ChkActualizar.Location = new System.Drawing.Point(70, 227);
             this.ChkActualizar.Name = "ChkActualizar";
             this.ChkActualizar.Size = new System.Drawing.Size(72, 17);
             this.ChkActualizar.TabIndex = 14;
@@ -195,7 +212,7 @@
             // LblAncla
             // 
             this.LblAncla.AutoSize = true;
-            this.LblAncla.Location = new System.Drawing.Point(165, 253);
+            this.LblAncla.Location = new System.Drawing.Point(157, 228);
             this.LblAncla.Name = "LblAncla";
             this.LblAncla.Size = new System.Drawing.Size(37, 13);
             this.LblAncla.TabIndex = 15;
@@ -203,7 +220,7 @@
             // 
             // TxtAncla
             // 
-            this.TxtAncla.Location = new System.Drawing.Point(208, 250);
+            this.TxtAncla.Location = new System.Drawing.Point(200, 225);
             this.TxtAncla.Name = "TxtAncla";
             this.TxtAncla.Size = new System.Drawing.Size(163, 20);
             this.TxtAncla.TabIndex = 16;
@@ -212,7 +229,7 @@
             // LblSeparador
             // 
             this.LblSeparador.AutoSize = true;
-            this.LblSeparador.Location = new System.Drawing.Point(540, 111);
+            this.LblSeparador.Location = new System.Drawing.Point(532, 101);
             this.LblSeparador.Name = "LblSeparador";
             this.LblSeparador.Size = new System.Drawing.Size(12, 13);
             this.LblSeparador.TabIndex = 17;
@@ -220,7 +237,7 @@
             // 
             // TxtBuscar
             // 
-            this.TxtBuscar.Location = new System.Drawing.Point(208, 226);
+            this.TxtBuscar.Location = new System.Drawing.Point(200, 201);
             this.TxtBuscar.Name = "TxtBuscar";
             this.TxtBuscar.Size = new System.Drawing.Size(163, 20);
             this.TxtBuscar.TabIndex = 18;
@@ -230,7 +247,7 @@
             // LblBuscar
             // 
             this.LblBuscar.AutoSize = true;
-            this.LblBuscar.Location = new System.Drawing.Point(165, 229);
+            this.LblBuscar.Location = new System.Drawing.Point(157, 204);
             this.LblBuscar.Name = "LblBuscar";
             this.LblBuscar.Size = new System.Drawing.Size(40, 13);
             this.LblBuscar.TabIndex = 19;
@@ -238,7 +255,7 @@
             // 
             // TxtValorInsertar
             // 
-            this.TxtValorInsertar.Location = new System.Drawing.Point(445, 250);
+            this.TxtValorInsertar.Location = new System.Drawing.Point(437, 225);
             this.TxtValorInsertar.Multiline = true;
             this.TxtValorInsertar.Name = "TxtValorInsertar";
             this.TxtValorInsertar.Size = new System.Drawing.Size(302, 86);
@@ -248,7 +265,7 @@
             // LblInsertar
             // 
             this.LblInsertar.AutoSize = true;
-            this.LblInsertar.Location = new System.Drawing.Point(397, 255);
+            this.LblInsertar.Location = new System.Drawing.Point(389, 230);
             this.LblInsertar.Name = "LblInsertar";
             this.LblInsertar.Size = new System.Drawing.Size(42, 13);
             this.LblInsertar.TabIndex = 21;
@@ -257,7 +274,7 @@
             // RutaEjemplo
             // 
             this.RutaEjemplo.AutoSize = true;
-            this.RutaEjemplo.Location = new System.Drawing.Point(341, 155);
+            this.RutaEjemplo.Location = new System.Drawing.Point(333, 145);
             this.RutaEjemplo.Name = "RutaEjemplo";
             this.RutaEjemplo.Size = new System.Drawing.Size(73, 13);
             this.RutaEjemplo.TabIndex = 23;
@@ -267,7 +284,7 @@
             // BtnGenFiles
             // 
             this.BtnGenFiles.Enabled = false;
-            this.BtnGenFiles.Location = new System.Drawing.Point(590, 370);
+            this.BtnGenFiles.Location = new System.Drawing.Point(582, 333);
             this.BtnGenFiles.Name = "BtnGenFiles";
             this.BtnGenFiles.Size = new System.Drawing.Size(157, 23);
             this.BtnGenFiles.TabIndex = 24;
@@ -278,7 +295,7 @@
             // LblRuta
             // 
             this.LblRuta.AutoSize = true;
-            this.LblRuta.Location = new System.Drawing.Point(341, 171);
+            this.LblRuta.Location = new System.Drawing.Point(333, 161);
             this.LblRuta.Name = "LblRuta";
             this.LblRuta.Size = new System.Drawing.Size(0, 13);
             this.LblRuta.TabIndex = 22;
@@ -286,7 +303,7 @@
             // ChkMarco
             // 
             this.ChkMarco.AutoSize = true;
-            this.ChkMarco.Location = new System.Drawing.Point(67, 115);
+            this.ChkMarco.Location = new System.Drawing.Point(59, 105);
             this.ChkMarco.Name = "ChkMarco";
             this.ChkMarco.Size = new System.Drawing.Size(56, 17);
             this.ChkMarco.TabIndex = 25;
@@ -297,25 +314,15 @@
             // LblSearchValues
             // 
             this.LblSearchValues.AutoSize = true;
-            this.LblSearchValues.Location = new System.Drawing.Point(428, 228);
+            this.LblSearchValues.Location = new System.Drawing.Point(420, 203);
             this.LblSearchValues.Name = "LblSearchValues";
             this.LblSearchValues.Size = new System.Drawing.Size(0, 13);
             this.LblSearchValues.TabIndex = 26;
             // 
-            // BtnAddSearchItem
-            // 
-            this.BtnAddSearchItem.Image = global::GeneradorDeArchivos.Properties.Resources.right_arrow;
-            this.BtnAddSearchItem.Location = new System.Drawing.Point(377, 219);
-            this.BtnAddSearchItem.Name = "BtnAddSearchItem";
-            this.BtnAddSearchItem.Size = new System.Drawing.Size(34, 30);
-            this.BtnAddSearchItem.TabIndex = 27;
-            this.BtnAddSearchItem.UseVisualStyleBackColor = true;
-            this.BtnAddSearchItem.Click += new System.EventHandler(this.BtnAddSearchItem_Click);
-            // 
             // ChkAntes
             // 
             this.ChkAntes.AutoSize = true;
-            this.ChkAntes.Location = new System.Drawing.Point(208, 276);
+            this.ChkAntes.Location = new System.Drawing.Point(200, 251);
             this.ChkAntes.Name = "ChkAntes";
             this.ChkAntes.Size = new System.Drawing.Size(53, 17);
             this.ChkAntes.TabIndex = 28;
@@ -323,44 +330,158 @@
             this.ChkAntes.UseVisualStyleBackColor = true;
             this.ChkAntes.Visible = false;
             // 
+            // tabControl1
+            // 
+            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Location = new System.Drawing.Point(12, 12);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(758, 417);
+            this.tabControl1.TabIndex = 29;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.BtnSeleccionarCarpeta);
+            this.tabPage1.Controls.Add(this.LblRutaCarpeta);
+            this.tabPage1.Controls.Add(this.BtnGenFiles);
+            this.tabPage1.Controls.Add(this.ChkAntes);
+            this.tabPage1.Controls.Add(this.RutaEjemplo);
+            this.tabPage1.Controls.Add(this.BtnAddSearchItem);
+            this.tabPage1.Controls.Add(this.LblSearchValues);
+            this.tabPage1.Controls.Add(this.label2);
+            this.tabPage1.Controls.Add(this.ChkASP);
+            this.tabPage1.Controls.Add(this.LblInsertar);
+            this.tabPage1.Controls.Add(this.ChkMarco);
+            this.tabPage1.Controls.Add(this.TxtValorInsertar);
+            this.tabPage1.Controls.Add(this.ChkNET);
+            this.tabPage1.Controls.Add(this.LblBuscar);
+            this.tabPage1.Controls.Add(this.ListChkModulos);
+            this.tabPage1.Controls.Add(this.TxtBuscar);
+            this.tabPage1.Controls.Add(this.LblModulos);
+            this.tabPage1.Controls.Add(this.TxtAncla);
+            this.tabPage1.Controls.Add(this.LblRuta);
+            this.tabPage1.Controls.Add(this.LblAncla);
+            this.tabPage1.Controls.Add(this.LblParamsAdd);
+            this.tabPage1.Controls.Add(this.ChkActualizar);
+            this.tabPage1.Controls.Add(this.TxtParamsAdd);
+            this.tabPage1.Controls.Add(this.ChkEliminar);
+            this.tabPage1.Controls.Add(this.LblArchivo);
+            this.tabPage1.Controls.Add(this.label5);
+            this.tabPage1.Controls.Add(this.TxtArchivo);
+            this.tabPage1.Controls.Add(this.LblSeparador);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(750, 391);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "Generar";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.splitContainer1);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(750, 391);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "Comparar";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // splitContainer1
+            // 
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.Location = new System.Drawing.Point(3, 3);
+            this.splitContainer1.Name = "splitContainer1";
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.GridOriginales);
+            this.splitContainer1.Panel1.Controls.Add(this.LblOriginal);
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.GridGenerados);
+            this.splitContainer1.Panel2.Controls.Add(this.label1);
+            this.splitContainer1.Size = new System.Drawing.Size(744, 385);
+            this.splitContainer1.SplitterDistance = 366;
+            this.splitContainer1.TabIndex = 0;
+            // 
+            // GridOriginales
+            // 
+            this.GridOriginales.AllowUserToAddRows = false;
+            this.GridOriginales.AllowUserToDeleteRows = false;
+            this.GridOriginales.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.GridOriginales.Location = new System.Drawing.Point(13, 48);
+            this.GridOriginales.Name = "GridOriginales";
+            this.GridOriginales.ReadOnly = true;
+            this.GridOriginales.Size = new System.Drawing.Size(350, 332);
+            this.GridOriginales.TabIndex = 1;
+            this.GridOriginales.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Grids_CellDoubleClick);
+            // 
+            // LblOriginal
+            // 
+            this.LblOriginal.AutoSize = true;
+            this.LblOriginal.Location = new System.Drawing.Point(10, 18);
+            this.LblOriginal.Name = "LblOriginal";
+            this.LblOriginal.Size = new System.Drawing.Size(42, 13);
+            this.LblOriginal.TabIndex = 0;
+            this.LblOriginal.Text = "Original";
+            // 
+            // GridGenerados
+            // 
+            this.GridGenerados.AllowUserToAddRows = false;
+            this.GridGenerados.AllowUserToDeleteRows = false;
+            this.GridGenerados.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.GridGenerados.Location = new System.Drawing.Point(11, 48);
+            this.GridGenerados.Name = "GridGenerados";
+            this.GridGenerados.ReadOnly = true;
+            this.GridGenerados.Size = new System.Drawing.Size(360, 332);
+            this.GridGenerados.TabIndex = 1;
+            this.GridGenerados.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Grids_CellDoubleClick);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(11, 18);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(54, 13);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Generado";
+            // 
+            // BtnAddSearchItem
+            // 
+            this.BtnAddSearchItem.Image = global::GeneradorDeArchivos.Properties.Resources.right_arrow;
+            this.BtnAddSearchItem.Location = new System.Drawing.Point(369, 194);
+            this.BtnAddSearchItem.Name = "BtnAddSearchItem";
+            this.BtnAddSearchItem.Size = new System.Drawing.Size(34, 30);
+            this.BtnAddSearchItem.TabIndex = 27;
+            this.BtnAddSearchItem.UseVisualStyleBackColor = true;
+            this.BtnAddSearchItem.Click += new System.EventHandler(this.BtnAddSearchItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(775, 424);
-            this.Controls.Add(this.ChkAntes);
-            this.Controls.Add(this.BtnAddSearchItem);
-            this.Controls.Add(this.LblSearchValues);
-            this.Controls.Add(this.ChkMarco);
-            this.Controls.Add(this.BtnGenFiles);
-            this.Controls.Add(this.RutaEjemplo);
-            this.Controls.Add(this.LblRuta);
-            this.Controls.Add(this.LblInsertar);
-            this.Controls.Add(this.TxtValorInsertar);
-            this.Controls.Add(this.LblBuscar);
-            this.Controls.Add(this.TxtBuscar);
-            this.Controls.Add(this.LblSeparador);
-            this.Controls.Add(this.TxtAncla);
-            this.Controls.Add(this.LblAncla);
-            this.Controls.Add(this.ChkActualizar);
-            this.Controls.Add(this.ChkEliminar);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.TxtArchivo);
-            this.Controls.Add(this.LblArchivo);
-            this.Controls.Add(this.TxtParamsAdd);
-            this.Controls.Add(this.LblParamsAdd);
-            this.Controls.Add(this.LblModulos);
-            this.Controls.Add(this.ListChkModulos);
-            this.Controls.Add(this.ChkNET);
-            this.Controls.Add(this.ChkASP);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.LblRutaCarpeta);
-            this.Controls.Add(this.BtnSeleccionarCarpeta);
+            this.ClientSize = new System.Drawing.Size(772, 429);
+            this.Controls.Add(this.tabControl1);
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.tabControl1.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
+            this.tabPage1.PerformLayout();
+            this.tabPage2.ResumeLayout(false);
+            this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel1.PerformLayout();
+            this.splitContainer1.Panel2.ResumeLayout(false);
+            this.splitContainer1.Panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
+            this.splitContainer1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.GridOriginales)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.GridGenerados)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -394,6 +515,14 @@
         private System.Windows.Forms.Label LblSearchValues;
         private System.Windows.Forms.Button BtnAddSearchItem;
         private System.Windows.Forms.CheckBox ChkAntes;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.SplitContainer splitContainer1;
+        private System.Windows.Forms.Label LblOriginal;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.DataGridView GridOriginales;
+        private System.Windows.Forms.DataGridView GridGenerados;
     }
 }
 
