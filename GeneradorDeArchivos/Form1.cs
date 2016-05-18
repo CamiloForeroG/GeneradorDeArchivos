@@ -29,6 +29,7 @@ namespace GeneradorDeArchivos
         private void Form1_Load(object sender, EventArgs e)
         {
             ChkASP.Checked = true;
+            //ChkASP1.Checked = true;
             ChkEliminar.Checked = true;
             ReOrganizeControls(true);
 
@@ -56,9 +57,11 @@ namespace GeneradorDeArchivos
 
         private void ChkNET_CheckedChange(object sender, EventArgs e)
         {
-            if (ChkNET.Checked)
+            if (!this.Focused) return;
+            if (ChkNET.Checked || ChkNET1.Checked)
             {
-                ChkMarco.Checked = ChkASP.Checked = !ChkNET.Checked;
+                var valChk = !ChkNET.Checked;
+                ChkMarco.Checked = ChkMarco1.Checked = ChkASP.Checked = ChkASP1.Checked = valChk;
                 ReOrganizeControls(false);
                 LblRuta.Text = strRuta = TxtArchivo.Text = TxtParamsAdd.Text = "";
                 RutaEjemplo.Visible = false;
@@ -92,14 +95,16 @@ namespace GeneradorDeArchivos
 
         private void ChkASP_CheckedChange(object sender, EventArgs e)
         {
-            if (ChkASP.Checked) ChkNET.Checked = ChkMarco.Checked = !ChkASP.Checked;
+            if (!this.Focused) return;
+            if (ChkASP.Checked || ChkASP1.Checked) ChkNET.Checked = ChkNET1.Checked = ChkMarco.Checked = ChkMarco1.Checked = !ChkASP.Checked;
             LblRuta.Text = strRuta = TxtArchivo.Text = TxtParamsAdd.Text = "";
             RutaEjemplo.Visible = false;
         }
 
         private void ChkMarco_CheckedChanged(object sender, EventArgs e)
         {
-            if (ChkMarco.Checked) ChkNET.Checked = ChkASP.Checked = !ChkMarco.Checked;
+            if (!this.Focused) return;
+            if (ChkMarco.Checked || ChkMarco1.Checked) ChkNET.Checked = ChkNET1.Checked = ChkASP.Checked = ChkASP1.Checked = !ChkMarco.Checked;
             LblRuta.Text = strRuta = TxtArchivo.Text = TxtParamsAdd.Text = "";
             ReOrganizeControls(true);
             RutaEjemplo.Visible = false;
@@ -131,44 +136,65 @@ namespace GeneradorDeArchivos
 
                 if (ChkASP.Checked)
                 {
-                    LblParamsAdd.Location = new Point(130, 45);
-                    TxtParamsAdd.Location = new Point(130, 63);
-                    TxtParamsAdd.Width = 240;
+                    LblParamsAdd.Location = new Point(135, 85);
+                    TxtParamsAdd.Location = new Point(135, 103);
+                    TxtParamsAdd.Width = 250;
+                    LblParamsAdd1.Location = new Point(135, 85);
+                    TxtParamsAdd1.Location = new Point(135, 103);
+                    TxtParamsAdd1.Width = 250;
 
-                    LblArchivo.Location = new Point(385, 45);
-                    TxtArchivo.Location = new Point(385, 63);
-                    TxtArchivo.Width = 240;
 
-                    LblSeparador.Location = new Point(372, 66);
+                    LblArchivo.Location = new Point(403, 85);
+                    TxtArchivo.Location = new Point(403, 103);
+                    TxtArchivo.Width = 250;
+                    LblArchivo1.Location = new Point(403, 85);
+                    TxtArchivo1.Location = new Point(403, 103);
+                    TxtArchivo1.Width = 250;
+
+                    LblSeparador.Location = new Point(388, 106);
+                    LblSeparador1.Location = new Point(388, 106);
                 }
 
                 else
                 {
-                    LblParamsAdd.Location = new Point(135, 95);
-                    TxtParamsAdd.Location = new Point(135, 115);
-                    TxtParamsAdd.Width = 240;
+                    LblParamsAdd.Location = new Point(135, 135);
+                    TxtParamsAdd.Location = new Point(135, 155);
+                    TxtParamsAdd.Width = 250;
+                    LblParamsAdd1.Location = new Point(135, 135);
+                    TxtParamsAdd1.Location = new Point(135, 155);
+                    TxtParamsAdd1.Width = 250;
 
-                    LblArchivo.Location = new Point(393, 95);
-                    TxtArchivo.Location = new Point(393, 115);
-                    TxtArchivo.Width = 240;
+                    LblArchivo.Location = new Point(403, 135);
+                    TxtArchivo.Location = new Point(403, 155);
+                    TxtArchivo.Width = 250;
+                    LblArchivo1.Location = new Point(403, 135);
+                    TxtArchivo1.Location = new Point(403, 155);
+                    TxtArchivo1.Width = 250;
 
-                    LblSeparador.Location = new Point(378, 117);
+                    LblSeparador.Location = new Point(388, 157);
+                    LblSeparador1.Location = new Point(388, 157);
                 }
             }
 
             else
             {
-                LblParamsAdd.Location = new Point(338, 91);
-                TxtParamsAdd.Location = new Point(344, 107);
-                TxtParamsAdd.Width = 190;
+                LblParamsAdd.Location = new Point(298, 111);
+                TxtParamsAdd.Location = new Point(298, 127);
+                TxtParamsAdd.Width = 210;
+                LblParamsAdd1.Location = new Point(298, 111);
+                TxtParamsAdd1.Location = new Point(298, 127);
+                TxtParamsAdd1.Width = 210;
 
-                LblArchivo.Location = new Point(559, 91);
-                TxtArchivo.Location = new Point(559, 108);
-                TxtArchivo.Width = 190;
+                LblArchivo.Location = new Point(534, 111);
+                TxtArchivo.Location = new Point(534, 127);
+                TxtArchivo.Width = 210;
+                LblArchivo1.Location = new Point(534, 111);
+                TxtArchivo1.Location = new Point(534, 127);
+                TxtArchivo1.Width = 210;
 
-                LblSeparador.Location = new Point(540, 111);
+                LblSeparador.Location = new Point(515, 131);
+                LblSeparador1.Location = new Point(515, 131);
             }
-
         }
 
         private void TxtArchivo_Leave(object sender, EventArgs e)
@@ -456,6 +482,12 @@ namespace GeneradorDeArchivos
             var generatedFileRoute = GridGenerados.Rows[e.RowIndex].Cells[1].Value;
             var ters = new Comparaciones(originalFileRoute.ToString(), generatedFileRoute.ToString(), ChkEliminar.Checked);
             ters.Show();
+        }
+
+        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!ChkASP1.Checked && !ChkMarco1.Checked && !ChkNET1.Checked)
+                ChkASP1.Checked = true;
         }
     }
 }
